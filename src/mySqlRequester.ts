@@ -25,6 +25,7 @@ export interface MySqlRequesterParameters {
   user: string;
   password: string;
   database: string;
+  mysqlLog?: boolean;
 }
 
 export function mySqlRequesterFactory(parameters: MySqlRequesterParameters): PlywoodRequester<string> {

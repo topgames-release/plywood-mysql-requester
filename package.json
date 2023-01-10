@@ -1,5 +1,5 @@
 {
-  "name": "plywood-mysql-requester",
+  "name": "@topgames/plywood-mysql-requester",
   "version": "2.3.0",
   "description": "MySQL requester for Plywood (within node)",
   "keywords": [
@@ -7,13 +7,13 @@
     "requester"
   ],
   "author": {
-    "name": "Vadim Ogievetsky",
-    "url": "http://vadim.ogievetsky.com"
+    "name": "Waybi Ou",
+    "url": "https://github.com/waybi"
   },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "http://github.com/implydata/plywood-mysql-requester.git"
+    "url": "https://github.com/topgames-release/plywood-mysql-requester.git"
   },
   "main": "build/mySqlRequester.js",
   "typings": "build/mySqlRequester.d.ts",
