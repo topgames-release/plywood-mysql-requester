@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import * as mysql from 'mysql';
-import { PlywoodRequester, PlywoodLocator, basicLocator } from 'plywood-base-api';
-import { Readable } from 'readable-stream';
+import * as mysql from "mysql";
+import {
+  PlywoodRequester,
+  PlywoodLocator,
+  basicLocator,
+} from "@topgames/plywood-base-api";
+import { Readable } from "readable-stream";
 
 export interface MySqlRequesterParameters {
   locator?: PlywoodLocator;
@@ -28,7 +32,9 @@ export interface MySqlRequesterParameters {
   mysqlLog?: boolean;
 }
 
-export function mySqlRequesterFactory(parameters: MySqlRequesterParameters): PlywoodRequester<string> {
+export function mySqlRequesterFactory(
+  parameters: MySqlRequesterParameters
+): PlywoodRequester<string> {
   let locator = parameters.locator;
   if (!locator) {
     let host = parameters.host;
@@ -47,9 +53,9 @@ export function mySqlRequesterFactory(parameters: MySqlRequesterParameters): Ply
     // options.objectMode = true;
     let stream = new Readable({
       objectMode: true,
-      read: function() {
+      read: function () {
         connection && connection.resume();
-      }
+      },
     });
 
     locator()
@@ -60,30 +66,30 @@ export function mySqlRequesterFactory(parameters: MySqlRequesterParameters): Ply
           user: user,
           password: password,
           database: database,
-          charset: 'UTF8_BIN',
-          timezone: '+00:00'
+          charset: "UTF8_BIN",
+          timezone: "+00:00",
         });
 
         connection.connect();
 
         let q = connection.query(query);
 
-        q.on('result', function(row) {
+        q.on("result", function (row) {
           if (!stream.push(row)) connection.pause();
         });
 
-        q.on('error', function(err) {
-          stream.emit('error', err);  // Pass on any errors
+        q.on("error", function (err) {
+          stream.emit("error", err); // Pass on any errors
         });
 
-        q.on('end', function() {
-          stream.push(null);  // pushing null, indicating EOF
+        q.on("end", function () {
+          stream.push(null); // pushing null, indicating EOF
         });
 
         connection.end();
       })
       .catch((err: Error) => {
-        stream.emit('error', err);  // Pass on any errors
+        stream.emit("error", err); // Pass on any errors
       });
 
     return stream;
